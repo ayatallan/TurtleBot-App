@@ -5,4 +5,5 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     path('oauth/', include('social_django.urls', namespace='social')), # <-- here
     path("register/", register, name="register"),
+    
 ]

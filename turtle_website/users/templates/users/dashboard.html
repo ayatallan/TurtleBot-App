@@ -1,21 +1,253 @@
-<!--users/templates/users/dashboard.html-->
-{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block content %}
-hiiiiiiiiiiiiiiiiiiiiiiiiiii
-  <div class="header">
-    <h1 style="color: #ffcc00;">Dashboard</h1>
-    <p>Hello, {{ user.username|default:'Guest' }}!</p>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="{% static 'images/logo1.png' %}">
+
+  <title>Inspection App</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 90vh;
+
+    }
+
+    .websiteHeader {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 20px;
+      border-bottom: 1px solid #dddddd;
+      position: sticky;
+      z-index: 1;
+      top: 0;
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      text-shadow: 1px 1px 1px #dddd8d;
+      background: #FFF2CD;
+      box-shadow: -10px -1px 14px 1px #dddd8d;
+    }
+
+    .websiteHeader>.left {
+      display: flex;
+      align-items: center;
+    }
+
+    .websiteHeader>.left>h1 {
+      font-size: 30px;
+      color: #5090cd;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      /* text-transform: uppercase; */
+      letter-spacing: 1.5px;
+      margin: 0;
+      margin-right: 20px;
+    }
+
+
+    .websiteHeader>.left>h1>img {
+      height: 90px;
+      width: auto;
+      margin-right: 5px;
+    }
+
+    .websiteHeader .right {
+      display: flex;
+      align-items: center;
+    }
+
+    .websiteHeader .right .user-badge {
+      display: flex;
+      align-items: center;
+      column-gap: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #777777;
+    }
+
+    .websiteHeader .right .user-badge>img {
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      margin: 0;
+    }
+
+    .websiteHeader .right .user-badge>.content>a {
+      appearance: none;
+      background: none;
+      border: none;
+      font-weight: bold;
+      color: #999;
+      cursor: pointer;
+      text-decoration: none;
+      padding: .3rem;
+    }
+
+    .websiteHeader .right .user-badge>.content>a:hover,
+    .websiteHeader .right .user-badge>.content>a:active,
+    .websiteHeader .right .user-badge>.content>a:focus {
+      color: #666;
+    }
+
+    .view-wrapper {
+      display: flex;
+      justify-content: center;
+      font-size: 30px;
+      letter-spacing: 1.5px;
+
+
+    }
+
+    .view {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 80%;
+      padding: 2rem;
+      padding-bottom: 1rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: #5090cd;
+      border-radius: 12px;
+    
+
+    }
+
+    .view>.img {
+      display: flex;
+      justify-content: right;
+      align-items: center;
+
+
+    }
+
+    img {
+      width:100%;
+      height: 100%;
+    }
+
+    .view>.description {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      width: 90%;
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      text-align: justify;
+      text-justify: inter-word;
+      /* height: 50vh; */
+      color: #FFF2CD;
+
+
+
+    }
+
+    strong {
+      color: #fad02c;
+      text-transform: uppercase;
+      font-size: 50px;
+
+
+    }
+
+    .hello {
+      font-size: 40px;
+      text-align: left;
+      padding-left: 2rem;
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+
+    .name{
+      color: #5090cd;
+      font-weight: bolder;
+      text-shadow: 1px 1px 1px #fad02c;
+
+    }
+    .btn {
+      /* background-color: red; */
+      line-height: 50px;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+
+    }
+
+    .view>.description>.butons {
+      background-color:  #fad02c;
+      width: 70%;
+      padding: 1rem;
+      color: #FFF2CD;
+      border: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 15px;
+      margin: 0.5rem;
+      cursor: pointer;
+      font-weight: bolder;
+      font-size: 24px;
+      margin-top: 5rem;
+    }
+
+    .view>.description>.butons:hover {
+      background-color: #FFF2CD;
+      color: #fad02c;
+
+    }
+  </style>
+
+<body>
+
+  <header class="websiteHeader">
+    <div class="left">
+      <h1>
+        <img src="{% static 'images/logo1.png' %}" alt="Bot" width="70" height="70" />
+        Automated Building Inspection System
+
+      </h1>
+    </div>
+    <div class="right">
+      <span class="user-badge">
+        <!-- Replace with a placeholder user image or user icon -->
+        <img src="{% static 'images/12.png' %}" alt="user logo" width="70" height="70" />
+
+        <p >{{ user.username|default:'Guest' }}</p>
+
+        <div class="content">
+          {% if user.is_authenticated %}
+          <a href="{% url 'logout' %}">Logout</a>
+          <a href="{% url 'password_change' %}">Change password</a>
+          {% else %}
+          <a href="{% url 'login' %}">Login</a>
+          {% endif %}
+        </div>
+
+      </span>
+    </div>
+  </header>
+  <div class="hello">
+    <p class="name"> Hello <strong>{{ user.username|default:'Guest' }}</strong> <strong> &#128075;</strong></p>
   </div>
+  <div class="view-wrapper">
 
-  <div class="container">
-    <div class="content">
-      {% if user.is_authenticated %}
-        <a href="{% url 'logout' %}">Logout</a>
-        <a href="{% url 'password_change' %}">Change password</a>
-      {% else %}
-        <a href="{% url 'login' %}">Login</a>
-      {% endif %}
+    <div class="view">
+
+      <div class="description">
+        <div class="btn">
+          Welcome to <strong> INSPECTION SYSTEM APP</strong>, a cutting-edge platform designed for seamless
+          viewing of inspection reports and
+          detailed maps. Whether you're a building inspector, engineer, or property owner, Our App is your
+          go-to solution for a comprehensive overview of structural assessments.
+        </div>
+        <button class="butons">Click To Start</button>
+      </div>
+
+      <div class="img">
+        <img src="{% static 'images/Robot.png' %}" alt="">
+      </div>
+
     </div>
   </div>
-{% endblock %}
+
+</body>
+
+</html>
